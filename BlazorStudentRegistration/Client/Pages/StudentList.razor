@@ -1,0 +1,46 @@
+﻿@page "/StudentList"
+@using BlazorStudentRegistration.Shared.Model
+@inject HttpClient Http
+<h3>StudentList</h3>
+
+<table>
+    <tbody>
+        <tr>
+            <td> First Name</td>
+            <td> Last Name</td>
+            <td> Date of Birth </td>
+            <td> Class </td>
+        </tr>
+
+    </tbody>
+    @if (students is object)
+    {
+        @foreach (var item in students)
+        {
+            <tr>
+                <td> @item.First_Name </td>
+                <td> @item.Last_Name </td>
+                <td>@item.DateOfBirth </td>
+                <td> @item.Class_ </td>
+            </tr>
+        }
+
+    }
+    else
+    {
+        <tr><td colspan="4">Loading</td></tr>
+    }
+
+</table>
+
+
+@code {
+
+    private Students[]? students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        students = await Http.GetFromJsonAsync<Students[]>("api/Students");
+    }
+
+}
